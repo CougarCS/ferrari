@@ -29,9 +29,13 @@
 
 		var submitID = function() {
 			$.ajax({
-				url: '${createLink(controller: 'swipe', action: 'swipe')}',
+				url: '${createLink(controller: 'swipe', action: 'readCard')}',
 				data: {swipe: string},
-				cache: false
+				cache: false,
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
 			});
 		}
 	</script>
