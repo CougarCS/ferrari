@@ -37,7 +37,7 @@ grails.project.dependency.resolution = {
 
         grailsPlugins()
         grailsHome()
-        mavenLocal('E:/mvn/repository')
+        mavenLocal()
         grailsCentral()
         mavenCentral()
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
@@ -63,11 +63,12 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.6'
         compile ":asset-pipeline:1.8.7"
 	    compile ':grails-lwo:alpha-0.1'
+	    compile ":twitter-bootstrap:3.2.0.2"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.5.3" // or ":hibernate:3.6.10.15"
         runtime ":database-migration:1.4.0"
-        runtime ":jquery:1.11.1"
+//        runtime ":jquery:1.11.1"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.7.4"

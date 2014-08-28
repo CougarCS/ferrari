@@ -7,7 +7,35 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
-*= require main
-*= require mobile
-*= require_self
+*== require main
+*== require mobile
+*== require_self
+*= require bootstrap
 */
+
+html, body {height: 100%;}
+body {
+	background-color: #CC0000;
+}
+
+#content {
+	min-height: 100%;
+	background-color: white;
+}
+
+#content > div { overflow:auto;
+	padding-bottom: 150px;}  /* must be same height as the footer */
+
+#footer {position: relative;
+	margin-top: -150px; /* negative value of footer height */
+	height: 150px;
+	clear:both;}
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
+}

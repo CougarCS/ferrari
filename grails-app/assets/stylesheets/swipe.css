@@ -1,0 +1,21 @@
+#feedback {
+	height: 100px;
+	border: solid 1px #000000;
+	background-color: #ffffff;
+}
+
+#feedback.typing, #feedback.awaitingResponse {
+	background-color: #ffff00;
+}
+
+#feedback.ok {
+	background-color: #00dd00;
+}
+
+#feedback.badRead {
+	background-color: orange;
+}
+
+#feedback.badCard {
+	background-color: darkred;
+}
