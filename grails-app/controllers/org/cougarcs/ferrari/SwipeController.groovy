@@ -31,7 +31,7 @@ class SwipeController {
 				render member.toBean() as JSON
 			}
 			else {
-				response.sendError(400)
+				response.sendError(403)
 			}
 		}
 		else {

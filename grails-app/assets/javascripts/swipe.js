@@ -69,7 +69,12 @@ var submitID = function() {
 			readerFeedback.setClass('ok');
 		},
 		error: function(xhr) {
-			readerFeedback.setClass('badRead');
+			if (xhr.status == 400) {
+				readerFeedback.setClass('badRead');
+			}
+			if (xhr.status == 403) {
+				readerFeedback.setClass('badCard');
+			}
 		}
 	});
 };
