@@ -42,6 +42,22 @@ class SwipeController {
 		}
 	}
 
+	def addForm() {
+		render model: [
+				classifications: ['', CougarCSMember.Classifications.collect { it.name() }].flatten(),
+				shirtSizes: ['', CougarCSMember.ShirtSizes.collect { it.name() }].flatten(),
+				pizzaTypes: ['', CougarCSMember.PizzaTypes.collect { it.name() }].flatten()
+		], view: 'addForm'
+	}
+
+	def lookupForm() {
+		render model: [
+				classifications: ['', CougarCSMember.Classifications.collect { it.name() }].flatten(),
+				shirtSizes: ['', CougarCSMember.ShirtSizes.collect { it.name() }].flatten(),
+				pizzaTypes: ['', CougarCSMember.PizzaTypes.collect { it.name() }].flatten()
+		], view: 'lookupForm'
+	}
+
 	def addMember() {
 
 		CougarCSMember member = CougarCSMember.findByPeoplesoftId(params.peoplesoftId.removeLeading('0'))
@@ -49,6 +65,10 @@ class SwipeController {
 		if (member == null) {
 			member = cougarCSMemberService.createMember(params.name, '', params.peoplesoftId)
 			member.emailAddress = params.emailAddress
+			member.paid = params.paid
+			member.classification = params.classification
+			member.shirtSize = params.shirtSize
+			member.pizzaType = params.pizzaType
 
 			println member as JSON
 			member.save(true)
@@ -74,12 +94,13 @@ class SwipeController {
 
 	def editMember() {
 
+		params.peoplesoftId = params.peoplesoftId.removeLeading('0')
 		CougarCSMember member = CougarCSMember.fromBean(params)
 
 		println member.toBean() as JSON
 
 		if (member != null) {
-
+			member.save(true)
 			render([success: true] as JSON)
 		}
 		else {

@@ -6,9 +6,9 @@
 
 	<script type="text/javascript">
 		var url = '${createLink(controller: 'swipe', action: 'readCard')}';
-		var addFormUrl = '${createLink(mapping: 'addForm')}';
+		var addFormUrl = '${createLink(controller: 'swipe', action: 'addForm')}';
 		var addSubmitUrl = '${createLink(controller: 'swipe', action: 'addMember')}';
-		var lookupFormUrl = '${createLink(mapping: 'lookupForm')}';
+		var lookupFormUrl = '${createLink(controller: 'swipe', action: 'lookupForm')}';
 		var lookupSubmitUrl = '${createLink(controller: 'swipe', action: 'lookupMember')}';
 		var editSubmitUrl = '${createLink(controller: 'swipe', action: 'editMember')}';
 	</script>

@@ -120,6 +120,9 @@ var bindLookupButtonListener = function() {
 					$('#name').val(data.name);
 					$('#paid').prop('checked', data.paid);
 					$('#isAdmin').prop('checked', data.isAdmin);
+					$('#classification').val(data.classification);
+					$('#shirtSize').val(data.shirtSize);
+					$('#pizzaType').val(data.pizzaType);
 				}
 			});
 
