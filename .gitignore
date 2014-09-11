@@ -12,3 +12,5 @@ tasks.xml
 /out
 /.idea
 .DS_Store
+
+*.iml
