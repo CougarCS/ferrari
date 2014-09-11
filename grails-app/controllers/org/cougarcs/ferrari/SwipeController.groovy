@@ -4,6 +4,8 @@ import grails.converters.JSON
 
 class SwipeController {
 
+	def cougarCSMemberService
+
 	def index() {
 		println CougarCSMember.all.collect { [it.peoplesoftId, it.cardNumber] }
 //		new CougarCSMember(peoplesoftId: '867753').save()
@@ -12,6 +14,7 @@ class SwipeController {
 	}
 
 	def readCard() {
+		println params.actionType
 		def cardInfo = params.swipe =~ /%0*(\d+)\?;(\d+)0\?/
 		if (cardInfo.find()) {
 			def psId = cardInfo.group(1)
@@ -22,8 +25,8 @@ class SwipeController {
 			if ((member = CougarCSMember.findByPeoplesoftId(psId)) == null) {
 				member = new CougarCSMember(peoplesoftId: psId)
 			}
-
-			if (member.cardNumber == null || member.cardNumber != null && member.cardNumber == cardNumber) {
+			if ((params.actionType == 'ADD' && member.cardNumber == null) ||
+					(params.actionType == 'VERIFY' && member.cardNumber != null && member.cardNumber == cardNumber)) {
 				if (member.cardNumber == null) {
 					member.cardNumber = cardNumber
 					member.save()
@@ -36,6 +39,51 @@ class SwipeController {
 		}
 		else {
 			response.sendError(400)
+		}
+	}
+
+	def addMember() {
+
+		CougarCSMember member = CougarCSMember.findByPeoplesoftId(params.peoplesoftId.removeLeading('0'))
+
+		if (member == null) {
+			member = cougarCSMemberService.createMember(params.name, '', params.peoplesoftId)
+			member.emailAddress = params.emailAddress
+
+			println member as JSON
+			member.save(true)
+
+			render([success: true] as JSON)
+		}
+		else {
+			render([success: false, reason: 'Member alread exists'] as JSON)
+		}
+	}
+
+	def lookupMember() {
+
+		CougarCSMember member = CougarCSMember.findByPeoplesoftId(params.peoplesoftId.removeLeading('0'))
+
+		if (member != null) {
+			render member.toBean() as JSON
+		}
+		else {
+			response.sendError(403);
+		}
+	}
+
+	def editMember() {
+
+		CougarCSMember member = CougarCSMember.fromBean(params)
+
+		println member.toBean() as JSON
+
+		if (member != null) {
+
+			render([success: true] as JSON)
+		}
+		else {
+			response.sendError(403)
 		}
 	}
 }

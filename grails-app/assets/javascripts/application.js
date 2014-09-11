@@ -19,3 +19,31 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
+
+var activeButton = undefined;
+
+$(document).ready(function() {
+	$('.button').each(function() {
+		var button = $(this);
+		button.extend({
+			id: function() {
+				return button.text();
+			},
+			activate: function() {
+				if (activeButton != button) {
+					button.addClass('selected');
+					if (activeButton !== undefined) {
+						activeButton.deactivate();
+					}
+					activeButton = button;
+				}
+			},
+			deactivate: function() {
+				button.removeClass('selected');
+			}
+		});
+		button.on('click', function() {
+			button.activate();
+		});
+	});
+});

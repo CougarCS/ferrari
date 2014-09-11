@@ -19,3 +19,7 @@
 #feedback.badCard {
 	background-color: darkred;
 }
+
+#swipe .button {
+	height: 100px;
+}

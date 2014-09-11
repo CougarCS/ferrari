@@ -19,9 +19,7 @@
 	</head>
 	<body>
 		<div id="content" class="container">
-			<div>
-				<g:layoutBody/>
-			</div>
+			<g:layoutBody/>
 		</div>
 		<div id="footer">
 			<div class="container">

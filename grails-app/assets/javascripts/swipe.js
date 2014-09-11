@@ -1,4 +1,5 @@
 //= require jquery.min
+//= require jquery.form.js
 
 var readerFeedback;
 
@@ -10,8 +11,9 @@ var count = 0;
 $(document).ready(function() {
 
 	bindReaderFeedback();
-
 	bindSwipeListener();
+	bindAddButtonListener();
+	bindLookupButtonListener();
 });
 
 var bindReaderFeedback = function() {
@@ -38,9 +40,8 @@ var bindSwipeListener = function() {
 		if (reading) {
 			string += it;
 			if ((count += (it == '?' ? 1 : 0)) % 3 == 0) {
-				submitID();
 				stopTyping();
-				string = '';
+				submitID();
 			}
 		}
 	});
@@ -49,6 +50,7 @@ var bindSwipeListener = function() {
 var startTyping = function() {
 	readerFeedback.setClass('typing');
 	reading = true;
+	string = '';
 };
 
 var stopTyping = function() {
@@ -56,10 +58,12 @@ var stopTyping = function() {
 	readerFeedback.setClass('typing');
 };
 
-var submitID = function() {
+var submitID = defaultSubmitID;
+
+var defaultSubmitID = function() {
 	$.ajax({
 		url: url,
-		data: {swipe: string},
+		data: {swipe: string, actionType: activeButton.id()},
 		cache: false,
 		contentType: 'application/json',
 		beforeSend: function() {
@@ -76,5 +80,54 @@ var submitID = function() {
 				readerFeedback.setClass('badCard');
 			}
 		}
+	});
+};
+
+var addSubmitID = function() {
+	$('#peoplesoftId').val(string.substring(1, string.indexOf('?;')));
+	$('#addForm').submit();
+};
+
+var lookupSubmitID = function() {
+	$('#peoplesoftId').val(string.substring(1, string.indexOf('?;')));
+	$('#lookupForm').submit();
+};
+
+var bindAddButtonListener = function() {
+	$('#addButton').on('click', function() {
+		$('#formContent').load(addFormUrl, function() {
+			$('#addForm').ajaxForm({
+				url: addSubmitUrl,
+				type: 'post',
+				success: function(data) {
+					console.log(data);
+				}});
+		});
+		submitID = addSubmitID;
+	});
+};
+
+var bindLookupButtonListener = function() {
+	$('#lookupButton').on('click', function() {
+		$('#formContent').load(lookupFormUrl, function() {
+			$('#lookupForm').ajaxForm({
+				url: lookupSubmitUrl,
+				type: 'post',
+				success: function(data) {
+					console.log(data);
+					$('#editForm #peoplesoftId').val($('#lookupForm #peoplesoftId').val());
+					$('#emailAddress').val(data.emailAddress);
+					$('#name').val(data.name);
+					$('#paid').prop('checked', data.paid);
+					$('#isAdmin').prop('checked', data.isAdmin);
+				}
+			});
+
+			$('#editForm').ajaxForm({
+				url: editSubmitUrl,
+				type: 'post'
+			});
+		});
+		submitID = lookupSubmitID;
 	});
 };
