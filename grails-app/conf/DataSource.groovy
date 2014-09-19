@@ -19,6 +19,8 @@ environments {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:postgresql://volatileassertion.com:15422/cougarcs_ferrari_dev"
+	        username = config.grails.dev.database.username
+	        password = config.grails.dev.database.password
         }
     }
     test {
