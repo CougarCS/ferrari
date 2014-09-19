@@ -65,7 +65,7 @@ class SwipeController {
 		if (member == null) {
 			member = cougarCSMemberService.createMember(params.name, '', params.peoplesoftId)
 			member.emailAddress = params.emailAddress
-			member.paid = params.paid
+			member.paid = params.paid ?: false;
 			member.classification = params.classification
 			member.shirtSize = params.shirtSize
 			member.pizzaType = params.pizzaType

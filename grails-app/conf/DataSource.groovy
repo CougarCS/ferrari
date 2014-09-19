@@ -1,9 +1,9 @@
+def config = new ConfigSlurper().parse(new File('databaseConfig').toURI().toURL())
+
 dataSource {
     pooled = true
     jmxExport = true
     driverClassName = "org.postgresql.Driver"
-    username = 'eric'//"${System.getenv().get('grails.database.user')}"
-    password = 'z'//"${System.getenv().get('grails.database.password')}"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -31,7 +31,8 @@ environments {
         dataSource {
             dbCreate = "update"
             url = "jdbc:postgresql://volatileassertion.com:15422/cougarcs_ferrari"
-	        user = 'cougarcs'
+	        username = config.grails.prod.database.username
+	        password = config.grails.prod.database.password
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true

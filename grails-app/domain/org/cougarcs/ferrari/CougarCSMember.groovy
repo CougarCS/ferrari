@@ -5,7 +5,7 @@ import com.zeebo.lwo.BeanProperty
 class CougarCSMember {
 
 	static enum Classifications {
-		FRESHMAN, SOPHMORE, JUNIOR, SENIOR, GRADUATE, MASTERS, PHD
+		FRESHMAN, SOPHMORE, JUNIOR, SENIOR, GRADUATE, MASTERS, PHD, FACULTY, ALUMNI
 	}
 
 	static enum ShirtSizes {
